@@ -1,8 +1,0 @@
-useDynLib(Rbec, .registration=TRUE)
-exportPattern("^[[:alpha:]]+")
-importFrom(Rcpp, evalCpp)
-import(dada2)
-import(readr)
-import(ggplot2)
-import(doParallel)
-import(foreach)
