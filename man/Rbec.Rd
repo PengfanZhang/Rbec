@@ -39,7 +39,7 @@ This function corrects the amplicon sequencing data from synthetic communities w
 Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
 }
 \examples{
-fastq <- system.file("extdata", "test_raw_merged_reads.fastq", package = "Rbec")
+fastq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package = "Rbec")
 
 ref <- system.file("extdata", "test_ref.fasta", package = "Rbec")
 
