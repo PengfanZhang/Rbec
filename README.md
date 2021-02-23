@@ -66,7 +66,7 @@ Contam_detect(log_file, outdir)
 
 After running the above command, a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file recording contaminated samples are generated. Emperically, almost 90% or more of reads can be corrected in clean SynCom samples.
 
-3.Reliance on accurate reference sequences
+3.Dependence on accurate reference sequences
 ---
 
 Since Rbec is a reference-based method for error correction in sequencing reads, the accuracy of the reference sequence would profoundly influence the result. We could sequence the marker gene of strains in the SynCom beforehand with sanger sequencing or predict them from their whole genome sequencing, however, neither of the methods is error-free. If errors are present in the reference sequence of a certain strain and no reads can be peferctly aligned to that reference (with an initial abundance of 0 for that reference), Rbec flags this strain as absence with an abundance of 0. 
