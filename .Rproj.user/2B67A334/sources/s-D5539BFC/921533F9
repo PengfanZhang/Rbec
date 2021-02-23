@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1614088691784.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "725364642",
+    "id" : "921533F9",
+    "lastKnownWriteTime" : 1614088850,
+    "last_content_update" : 1614088850912,
+    "path" : "~/Documents/phd project/Microbiome-master/upload_github/Rbec/NAMESPACE",
+    "project_path" : "NAMESPACE",
+    "properties" : {
+        "cursorPosition" : "13,20",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_namespace"
+}

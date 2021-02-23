@@ -1,0 +1,71 @@
+[
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/inst/include/Rbec.h",
+        "file_last_write" : 1613747672
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/dada.h",
+        "file_last_write" : 1613572420
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 15,
+                "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/kmer_dist.cpp",
+                "kind" : 6,
+                "line" : 21,
+                "name" : "kmer_dist(std::vector<std::string>, std::vector<std::string>, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@kmer_dist#$@N@std@N@__1@C@vector>#$@N@std@N@__1@C@basic_string>#C#$@N@std@N@__1@S@char_traits>#C#$@N@std@N@__1@C@allocator>#C#$@N@std@N@__1@C@allocator>#S1_#S0_#I#"
+            }
+        ],
+        "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/kmer_dist.cpp",
+        "file_last_write" : 1613748282
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/rcpp_test.cpp",
+                "kind" : 6,
+                "line" : 9,
+                "name" : "nt2int(char *, const char *)",
+                "parent_name" : "",
+                "usr" : "c:@F@nt2int#*C#*1C#"
+            },
+            {
+                "column" : 7,
+                "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/rcpp_test.cpp",
+                "kind" : 6,
+                "line" : 41,
+                "name" : "intstr(const char *)",
+                "parent_name" : "",
+                "usr" : "c:@F@intstr#*1C#"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/rcpp_test.cpp",
+                "kind" : 6,
+                "line" : 51,
+                "name" : "kmer_dist(uint16_t *, int, uint16_t *, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@kmer_dist#*s#I#S0_#I#I#"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/rcpp_test.cpp",
+                "kind" : 6,
+                "line" : 67,
+                "name" : "assign_kmer(uint16_t *, const char *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@assign_kmer#*s#*1C#I#"
+            }
+        ],
+        "file" : "/Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/src/rcpp_test.cpp",
+        "file_last_write" : 1613572420
+    }
+]
