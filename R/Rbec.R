@@ -21,7 +21,7 @@
 #'
 #' @usage Rbec(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=33, min_cont_abs=0.03)
 #' @examples
-#' fastq <- system.file("extdata", "test_raw_merged_reads.fastq", package = "Rbec")
+#' fastq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package = "Rbec")
 #'
 #' ref <- system.file("extdata", "test_ref.fasta", package = "Rbec")
 #'
