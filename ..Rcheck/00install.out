@@ -1,0 +1,12 @@
+* installing *source* package ‘Rbec’ ...
+** libs
+make: Nothing to be done for `all'.
+installing to /Users/zhangpengfan/Documents/phd project/Microbiome-master/upload_github/Rbec/..Rcheck/Rbec/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (Rbec)

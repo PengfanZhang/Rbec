@@ -1,0 +1,15 @@
+Contam_detect           Reference-based error correction of amplicon
+                        sequencing data
+Rbec                    Reference-based error correction of amplicon
+                        sequencing data
+abd_prob                Reference-based error correction of amplicon
+                        sequencing data
+consis_err              Reference-based error correction of amplicon
+                        sequencing data
+error_m                 Reference-based error correction of amplicon
+                        sequencing data
+kmer_dist               DADA2
+loessErr                Reference-based error correction of amplicon
+                        sequencing data
+trans_m                 Reference-based error correction of amplicon
+                        sequencing data
