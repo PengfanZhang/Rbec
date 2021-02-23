@@ -7,7 +7,7 @@ using namespace std;
 
 //' @name kmer_dist
 //' @title DADA2
-//' @description Calculate the kmer distance between two sequences. This function directly copied from DADA2.
+//' @description Calculate the kmer distance between two sequences. This function is originally developed by DADA2 in 2012 and we adapt it here.
 //'
 //' @param s1 A \code{character(1)} of DNA sequence 1.
 //' @param s2 A \code{character(1)} of DNA sequence 2.
