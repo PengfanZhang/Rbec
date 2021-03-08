@@ -12,7 +12,6 @@
 #'
 #' @usage Contam_detect(log_file, outdir, outlier_constant=1.5)
 #' @examples
-#' log_file <- system.file("extdata", "rbec_test.log", package = "Rbec")
 #'
 #' @import ggplot2
 #' @import readr
@@ -44,8 +43,7 @@ Contam_detect <- function(log_file, outdir, outlier_constant=1.5){
   ratio <- sort(ratio)
   data4plot <- data.frame(sample = samples, ratio = ratio)
   # calculate the lower bound of percentage of corrected reads in clean samples
-  #lower_bd <- mean(ratio) - outlier_constant*var(ratio)
-  lower_bd <- mean(ratio) - outlier_constant*IQR(ratio)
+  lower_bd <- mean(ratio) - outlier_constant*var(ratio)
 
   data4plot$outlier <- "False"
   data4plot$outlier[which(data4plot$ratio < lower_bd)] <- "True"
@@ -64,7 +62,7 @@ Contam_detect <- function(log_file, outdir, outlier_constant=1.5){
   max_r <- round(max(ratio), digits = 2)
   min_r <- round(min(ratio), digits = 2)
   mean_r <- round(mean(ratio), digits = 2)
-  output <- c(paste("The maximum percentage of corrected reads: ", max_r, sep=""), paste("The minimum percentage of corrected reads: ", min_r, sep=""), paste("Mean: ", mean_r, sep=""), " ", " ", "Potentially contaminated samples (less than mean-1.5*IQR):", paste(as.character(data4plot$sample[seq(outlier_num)]), round(data4plot$ratio[seq(outlier_num)], digits = 2), sep=' '))
+  output <- c(paste("The maximum percentage of corrected reads: ", max_r, sep=""), paste("The minimum percentage of corrected reads: ", min_r, sep=""), paste("Mean: ", mean_r, sep=""), " ", " ", "Potentially contaminated samples (<e2><89><a4> mean-1.5*variance):", paste(as.character(data4plot$sample[seq(outlier_num)]), round(data4plot$ratio[seq(outlier_num)], digits = 2), sep=' '))
   stat_out <- paste(outdir, "summary.log", sep = "/")
-  write.table(as.data.frame(output), file=stat_out, sep="\t", quote=FALSE, col.names = FALSE, row.names = FALSE)
+  write.table(as.data.frame(output), file=stat_out, sep="\t", quote=F, col.names = F, row.names = F)
 }

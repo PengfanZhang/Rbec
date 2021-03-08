@@ -1,22 +1,18 @@
 Package: Rbec
 Type: Package
-Title: Reference-based error correction of amplicon sequencing data from SynComs
+Title: Reference-based error correction of amplicon sequencing data
+        from SynComs
 Version: 0.99.0
 Date: 2021-02-19
 Authors@R: person("Pengfan", "Zhang", email = "pzhang@mpipz.mpg.de", role = c("aut", "cre"))
 Description: Rbec is a adapted version of DADA2 for analyzing amplicon sequencing data from synthetic communities (SynComs), where the reference sequences for each strain exists. Rbec can not only accurately profile the microbial compositions in SynComs, but also predict the contaminants in SynCom samples.
 License: GPL (>= 2)
-Imports:
-    Rcpp (>= 1.0.6),
-    dada2,
-    ggplot2,
-    readr,
-    doParallel,
-    foreach
+Imports: Rcpp (>= 1.0.6), dada2, ggplot2, readr, doParallel, foreach
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
-biocViews: Software, WorkflowStep
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
+biocViews: Software, Workflow
+NeedsCompilation: yes
+Packaged: 2021-02-25 14:10:06 UTC; pzhang
+Author: Pengfan Zhang [aut, cre]
+Maintainer: Pengfan Zhang <pzhang@mpipz.mpg.de>
+Built: R 4.0.3; x86_64-conda-linux-gnu; 2021-02-25 14:12:51 UTC; unix

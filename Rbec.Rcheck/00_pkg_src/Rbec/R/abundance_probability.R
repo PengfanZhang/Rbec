@@ -26,7 +26,7 @@ abd_prob <- function(derep, ref, error_matrix) {
   seqs <- toupper(seqs)
   bestref <- derep[["bestref"]]
 
-  input_data <- data.frame(seqs, abd, bestref, stringsAsFactors=FALSE)
+  input_data <- data.frame(seqs, abd, bestref, stringsAsFactors=F)
 
     # calculate the estimated abundance of reference sequences by summing up the abundances of
     # reads potentailly produced from that reference sequence
@@ -60,7 +60,7 @@ abd_prob <- function(derep, ref, error_matrix) {
     lambda_out <- apply(input_data, 1, function(x) lambda_calculation(x[1], x[2], x[3]))
     lambda_out <- t(lambda_out)
     lambda_out <- apply(lambda_out, 2, function(x) as.numeric(x))
-    lambda_out <- as.data.frame(lambda_out, stringsAsFactors=FALSE)
+    lambda_out <- as.data.frame(lambda_out, stringsAsFactors=F)
 
     # calculate abundance probabilities
     names(lambda_out) <- c("Lambda", "Ref_ID", "Obs_abd")

@@ -30,7 +30,7 @@ error_m <- function(fq, ref, sample_size=10000, threads, ascii) {
     t1 <- Sys.time()
 
     # read FASTQ file
-    if (grepl(".gz", fq, fixed = TRUE)) {
+    if (grepl(".gz", fq, fixed = T)) {
         raw_data <- read_lines(gzfile(fq))
     }
     else {

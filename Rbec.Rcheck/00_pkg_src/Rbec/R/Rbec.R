@@ -64,9 +64,9 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
 
   ref <- read_lines(reference)
 
-  ref_name <- data.frame(name=ref[which(seq_along(ref)%%2==1)], seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
+  ref_name <- data.frame(name=ref[which(seq_along(ref)%%2==1)], seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=F)
   ref_name$name <- sub(">", "", ref_name$name)
-  ref <- data.frame(ref_seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
+  ref <- data.frame(ref_seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=F)
 
   # calculate the error matrix
   error_ref_matrix <- error_m(fastq, ref, sampling_size, threads, ascii)
@@ -90,15 +90,15 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
   contamination <- which(final_list$lambda_out$Corrected=="No" &
                          final_list$lambda_out$Obs_abd/error_ref_matrix$total_reads>=min_cont_abs)
   # output sequences of potential contaminants
-  conta_out <- data.frame(stringsAsFactors=FALSE)
+  conta_out <- data.frame(stringsAsFactors=F)
   c <- 1
   for (i in contamination){
     conta_rec <- paste(">Contamination_seq", c, sep="")
     conta_rate <- derep$uniques[i]/error_ref_matrix$total_reads
     conta_rec <- paste(conta_rec, conta_rate, sep=";")
-    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
+    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = F)
     conta_rec <- names(derep$uniques[i])
-    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
+    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = F)
     c <- c+1
   }
 
@@ -111,10 +111,10 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
   contaout <- paste(outdir, "contamination_seq.fna", sep="/")
   logout <- paste(outdir, "rbec.log", sep="/")
 
-  write.table(lambda_out, file= lambdaout, quote=FALSE, sep="\t", row.names = FALSE)
+  write.table(lambda_out, file= lambdaout, quote=FALSE, sep="\t", row.names = F)
   write.table(final_list[["err"]], file= emout, quote=FALSE, sep="\t")
-  write.table(straintab, file= straintabout, quote=FALSE, sep="\t", row.names=FALSE)
-  write.table(conta_out, file = contaout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
+  write.table(straintab, file= straintabout, quote=FALSE, sep="\t", row.names=F)
+  write.table(conta_out, file = contaout, quote=F, sep="", col.names = F, row.names = F)
 
   t2 <- Sys.time()
   time.used <- difftime(t2, t1, units = "mins")
@@ -123,7 +123,7 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
   summ <- paste(final_list$total_corrected/error_ref_matrix$total_reads*100, "% of reads were corrected!", sep="")
 
   log_out <- rbind(time.used, summ)
-  write.table(log_out, file = logout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
+  write.table(log_out, file = logout, quote=F, sep="", col.names = F, row.names = F)
 
 }
 

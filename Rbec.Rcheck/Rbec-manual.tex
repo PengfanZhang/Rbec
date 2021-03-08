@@ -1,0 +1,338 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8,latin1]{inputenc}
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `Rbec'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Reference-based error correction of amplicon sequencing data
+from SynComs}
+\item[Version]\AsIs{0.99.0}
+\item[Date]\AsIs{2021-02-19}
+\item[Description]\AsIs{Rbec is a adapted version of DADA2 for analyzing amplicon sequencing data from synthetic communities (SynComs), where the reference sequences for each strain exists. Rbec can not only accurately profile the microbial compositions in SynComs, but also predict the contaminants in SynCom samples.}
+\item[License]\AsIs{GPL (>= 2)}
+\item[Imports]\AsIs{Rcpp (>= 1.0.6), dada2, ggplot2, readr, doParallel, foreach}
+\item[LinkingTo]\AsIs{Rcpp}
+\item[RoxygenNote]\AsIs{7.1.1}
+\item[biocViews]\AsIs{Software, Workflow}
+\item[NeedsCompilation]\AsIs{yes}
+\item[Author]\AsIs{Pengfan Zhang [aut, cre]}
+\item[Maintainer]\AsIs{Pengfan Zhang }\email{pzhang@mpipz.mpg.de}\AsIs{}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{abd\_prob}{Reference-based error correction of amplicon sequencing data}{abd.Rul.prob}
+%
+\begin{Description}\relax
+This function calculates the abundance probabilities for each reads using poisson distribution
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+abd_prob(derep, ref, error_matrix)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{derep}] dereplicated reads (Ns are not allowed in the reads)
+
+\item[\code{ref}] the unique reference sequences of the reference seqeunces, each sequence must be in one line (Ns are not allowed in the sequences)
+
+\item[\code{error\_matrix}] The error matrix from the former iteration
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+Returns the lambda value and pvalue for each reads
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{consis\_err}{Reference-based error correction of amplicon sequencing data}{consis.Rul.err}
+%
+\begin{Description}\relax
+This function iterates the error matrix till reaching the stable stage
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+consis_err(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0.05, min_P=1e-40, max_diff_abs=100, max_diff_ratio=0.01)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{fq}] the path of the fastq file (Ns are not allowed in the reads)
+
+\item[\code{derep}] the derepliacted reads by dada2 function
+
+\item[\code{ref}] the reference sequences, each sequence should take up one line (Ns are not allowed in the reads)
+
+\item[\code{lambda\_out}] the matrix containg lambda value and pvalue from the former iteration
+
+\item[\code{sampling\_size}] the subsampling size of the reads
+
+\item[\code{ascii}] ascii characters used to encode phred scores
+
+\item[\code{min\_E}] the minimum expectation value of the Possion distribution for detecting paralogs within the same strain
+
+\item[\code{min\_P}] the P value cutoff for identifying errouneous reads
+
+\item[\code{max\_diff\_abs}] the maximum absolute difference in number of corrected reads between two iterations, together with max\_diff\_ratio, before jumping out of the iiteration
+
+\item[\code{max\_diff\_ratio}] the maximum difference in the percentages of corrected reads between two iterations
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+Returns the final files
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{Contam\_detect}{Reference-based error correction of amplicon sequencing data}{Contam.Rul.detect}
+%
+\begin{Description}\relax
+This function is designed for predicting the contaminated samples
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+Contam_detect(log_file, outdir, outlier_constant=1.5)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{log\_file}] the file contains a list of log files of each sample outputted with Rbec function
+
+\item[\code{outdir}] output directory
+
+\item[\code{outlier\_constant}] the multiplier of variance to define the outlier
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+Returns a plot showing the distribution of percentage of corrected reads across the whole sample set and a summary file recording which samples might be contaminated
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{error\_m}{Reference-based error correction of amplicon sequencing data}{error.Rul.m}
+%
+\begin{Description}\relax
+This function calculate the error matrix
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+error_m(fq, ref, sample_size, threads, ascii)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{fq}] the path of merged amplicon sequencing reads in fastq format (Ns are not allowed in the reads)
+
+\item[\code{ref}] the unique reference sequences of the reference seqeunces, each sequence must be in one line (Ns are not allowed in the sequences)
+
+\item[\code{sample\_size}] the sampling size of reads to generate the transition matrix
+
+\item[\code{threads}] the number of threads used to align the query reads to reference sequences
+
+\item[\code{ascii}] ascii characters used to encode phred scores
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+The output is a 20 by 43 transition probability matrix
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{kmer\_dist}{DADA2}{kmer.Rul.dist}
+%
+\begin{Description}\relax
+Calculate the kmer distance between two sequences. This function directly copied from DADA2.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+kmer_dist(s1, s2, kmer_size)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{s1}] A \code{character(1)} of DNA sequence 1.
+
+\item[\code{s2}] A \code{character(1)} of DNA sequence 2.
+
+\item[\code{kmer\_size}] Kmer size.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+The kmer distance between two sequences
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{loessErr}{Reference-based error correction of amplicon sequencing data}{loessErr}
+%
+\begin{Description}\relax
+This function fits the loess regression to the error matrix
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+loessErr(trans, min_err_rate=1e-07)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{trans}] the transition matrix
+
+\item[\code{min\_err\_rate}] the minimum transition probability for each substitution or insertion case
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+Returns the loess fitted error matrix
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\inputencoding{utf8}
+\HeaderA{Rbec}{Reference-based error correction of amplicon sequencing data}{Rbec}
+%
+\begin{Description}\relax
+This function corrects the amplicon sequencing data from synthetic communities where the reference sequences are known a priori
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+Rbec(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=33, min_cont_abs=0.03)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{fastq}] the path of the fastq file containg merged amplicon sequencing reads (Ns are not allowed in the reads)
+
+\item[\code{reference}] the path of the unique reference sequences, each sequence must be in one line (Ns are not allowed in the sequences)
+
+\item[\code{outdir}] the output directory, which should be created by the user
+
+\item[\code{threads}] the number of threads used, default 1
+
+\item[\code{sampling\_size}] the sampling size for calculating the error matrix, default 5000
+
+\item[\code{ascii}] ascii characters used to encode phred scores (33 or 64), default 33
+
+\item[\code{min\_cont\_abs}] the relative abundance of unique tgas for detecting contamination sequences that can't be corrected by any of the references
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+lambda\_final.out the lambda value and pvalue of the Poisson distribution for each read
+
+error\_matrix\_final.out the error matrix in the final iteration
+
+strain\_table.txt the strain composition of the sample
+
+contamination\_seq.fna the potential sequences generated by contaminants
+
+rbec.log percentage of corrected reads, which can be used to predict contaminated samples
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+%
+\begin{Examples}
+\begin{ExampleCode}
+fastq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package = "Rbec")
+
+ref <- system.file("extdata", "test_ref.fasta", package = "Rbec")
+
+Rbec(fastq=fastq, reference=ref, outdir="./", threads=1, sampling_size=500, ascii=33)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{trans\_m}{Reference-based error correction of amplicon sequencing data}{trans.Rul.m}
+%
+\begin{Description}\relax
+This function count the transition matrix
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+trans_m(query, ascii)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{query}] list containing subsampled amplicon sequencing reads, quality scores, and reference sequences showing the highest identity for each read (Ns are not allowed in the reads)
+
+\item[\code{ascii}] ascii characters used to encode phred scores
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
+\end{Details}
+%
+\begin{Value}
+The output is a 20 by 43 matrix containing the counts for different kinds of transitions
+\end{Value}
+%
+\begin{Author}\relax
+Pengfan Zhang
+\end{Author}
+\printindex{}
+\end{document}

@@ -42,7 +42,7 @@ trans_m <- function(query, ascii) {
     # check if the quality system is phred 33 or 64
     qual <- as.character(strtoi(charToRaw(paste((qual), collapse="")), 16L)-ascii)
 
-    align_data <- data.frame(alig=align_pairs, qual=qual, stringsAsFactors=FALSE)
+    align_data <- data.frame(alig=align_pairs, qual=qual, stringsAsFactors=F)
     return(align_data)
 
     }
@@ -51,7 +51,7 @@ trans_m <- function(query, ascii) {
     align_data <- do.call(rbind, apply(query, 1, function(x) tm_cal(x[1], x[2], x[3])))
 
     # transform transitions for each aligned querity to transition matrix
-    align_data <- data.frame(table(align_data), stringsAsFactors=FALSE)
+    align_data <- data.frame(table(align_data), stringsAsFactors=F)
     for(i in 1:nrow(align_data)){
       trans_matrix[as.character(align_data[i, 1]), as.character(align_data[i, 2])] <- align_data[i, 3]
     }

@@ -1,0 +1,2 @@
+Ref_seq	Corrected_Abundance
+Root149	8823
