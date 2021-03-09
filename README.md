@@ -19,6 +19,7 @@ Then you can directly download the source package (Rbec_0.1.0.tar.gz) and instal
 install.packages("Rbec_0.1.0.tar.gz", type='source')
 ```
 
+The package is under review in Bioconductor and soon it will be available for downloading there.
 
 How to use Rbec?
 ---
