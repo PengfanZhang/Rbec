@@ -12,7 +12,7 @@
 #'
 #' @usage Contam_detect(log_file, outdir, outlier_constant=1.5)
 #' @examples
-#' log_file <- system.file("extdata", "rbec_test.log", package = "Rbec")
+#' log_file <- system.file("extdata", "rbec_test.out", package = "Rbec")
 #'
 #' @import ggplot2
 #' @import readr
