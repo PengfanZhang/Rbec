@@ -17,5 +17,5 @@ kmer_dist(s1, s2, kmer_size)
 The kmer distance between two sequences
 }
 \description{
-Calculate the kmer distance between two sequences. This function directly copied from DADA2.
+Calculate the kmer distance between two sequences. This function is originally developed by DADA2 in 2012 and we adapt it here.
 }
