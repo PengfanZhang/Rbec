@@ -11,7 +11,7 @@ Rbec is a free R package. To install Rbec, one needs to have the 'dada2' package
 ```
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
-BiocManager::install("dada2", version = "3.11")
+BiocManager::install("dada2")
 ```
 
 Then you can directly download the source package (Rbec_0.1.0.tar.gz) and install it locally:
