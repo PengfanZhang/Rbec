@@ -27,27 +27,6 @@ from synthetic microbial communities, is the first documented software exclusive
 for analyzing the amplicon sequencing data from SynComs. Rbec can not only output accurate microbial 
 composition for each sample, but also predict the potential contaminants in the artificial system.
 
-## input data
-
-Rbec can use as an input FASTQ files from either single- or pair-end sequencing data. In addition, a database of reference sequences in FASTA format needs to be provided.
-
-Amplicon reads should be manually filtered by excluding reads with ambiguous reads with USEARCH or a similar software before running Rbec. Following is an example of removing reads with ambiguous reads with USEARCH:
-```
-usearch -fastq_filter <input_fastq> -fastqout <output_fastq> -fastq_maxns 0
-```
-
-Sequences in the reference database should be already truncated to the region matching the amplicon reads, which should be flanked by the primer sequences. For example, If we sequence the V5-V7 region of the synthetic bacterial community, the reference sequence of each strain in the reference database should also be truncated to retain the V5-V7 region only rather than the full-length of *16S* rRNA sequences. To truncate the reference sequences into a specific region, a tool such as cutadapt can be used:
-
-```
-cutadapt -g <forward_sequencing_primer> -a <reverse_sequencing_primer> -n 2 -o <output> <input>
-```
-
-Rbec currently only supports the reference database in a non-wrapped format. Towards this end, the following Unix command can be used to transform the wrapped sequences into non-wrapped ones.
-
-```
-awk 'BEGIN{seqs=""}{if(/^>/){if(seqs!=""){print seqs;seqs=""}; print $0} else{seqs=seqs""$0}}END{print seqs}' <input_reference_database> > <output_reference_database>
-```
-
 How to use Rbec?
 ---
 
@@ -70,7 +49,7 @@ Rbec(fq, ref, "./", 1, 500, 33)
 One of the main sources of technical variation in gnotobiotic experiments is caused by microbial contaminations occurring during the development of the experiment or already present during input SynCom preparation. One of the features of Rbec is the assessment of likely contaminated samples based the recruitment ratio of sequencing reads across samples. When analysing data with Rbec, a separate log file is provided as an output for each sample. To predict contaminated samples, a text file containing a list of all paths to the log files needs to be provided before running the following command:
 
 ```
-Contam_detect(log_file, outdir)
+#Contam_detect(log_file, outdir)
 ```
 
 This command will generate a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file with predicted contaminated samples are generated. As a general rule, 90% or more of reads should be corrected in clean SynCom samples.
