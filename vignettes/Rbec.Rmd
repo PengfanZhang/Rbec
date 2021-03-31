@@ -35,7 +35,8 @@ How to use Rbec?
 
 Rbec can be run to estimate SynCom community profiles. An example with a small test dataset from a single bacterial strain illustrates this process:
 
-```{r Rbec, eval = TRUE}
+```{r CommunityProfiling, eval = TRUE}
+library(Rbec)
 fq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package="Rbec")
 
 ref <- system.file("extdata", "test_ref.fasta", package="Rbec")
