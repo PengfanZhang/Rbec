@@ -1,2 +1,4 @@
 test_raw_merged_reads.fastq.gz is amplicon sequencing data from an individual bacterial strain isolated from Arabidopsis Thiliana;
-test_ref.fasta is the reference sequence of the V5/V7 region in the 16S rRNA gene from this strain.
+test_ref.fasta is the reference sequence of the V5/V7 region in the 16S rRNA gene from this strain;
+rbec_test.list is demo of the input file for contamination check in each sample, please modify the file by expicitly directing the path to the folder 'contamination_test' in the extdata;
+contamination_test is the directory containing 10 samples analyzed with Rbec and those samples is used for the test of potential contamination.
