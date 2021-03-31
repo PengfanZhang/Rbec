@@ -49,7 +49,6 @@ error_m <- function(fq, ref, sample_size=10000, threads, ascii) {
     # find the reference sequences with highest similarities for each unique sequence
     uniseqs <- names(derep1[["uniques"]])
 
-    # TODO: define this function outside
     findbest <- function(que) {
         # use the kmer distance function implemented in DADA2
         kdist <- function(que, ref, kmer=7) {
