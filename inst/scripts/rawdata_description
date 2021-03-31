@@ -1,0 +1,2 @@
+test_raw_merged_reads.fastq.gz is amplicon sequencing data from an individual bacterial strain isolated from Arabidopsis Thiliana;
+test_ref.fasta is the reference sequence of the V5/V7 region in the 16S rRNA gene from this strain.
