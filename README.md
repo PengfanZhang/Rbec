@@ -14,12 +14,17 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("dada2")
 ```
 
-Then you can directly download the source package (Rbec_0.1.0.tar.gz) and install it locally:
+Then you can directly download with devtools:
 ```
-install.packages("Rbec_0.1.0.tar.gz", type='source')
+devtools::install_github("PengfanZhang/Rbec", dependencies = TRUE)
 ```
 
-The package is under review in Bioconductor and soon it will be available for downloading there.
+Alternatively, you can download from Bioconductor:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("Rbec")
+```
 
 How to use Rbec?
 ---
