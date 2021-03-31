@@ -35,7 +35,7 @@ How to use Rbec?
 
 Rbec can be run to estimate SynCom community profiles. An example with a small test dataset from a single bacterial strain illustrates this process:
 
-```
+```{r CommunityProfiling, eval = TRUE}
 fq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package="Rbec")
 
 ref <- system.file("extdata", "test_ref.fasta", package="Rbec")
@@ -48,8 +48,8 @@ Rbec(fq, ref, "./", 1, 500, 33)
 
 One of the main sources of technical variation in gnotobiotic experiments is caused by microbial contaminations occurring during the development of the experiment or already present during input SynCom preparation. One of the features of Rbec is the assessment of likely contaminated samples based the recruitment ratio of sequencing reads across samples. When analysing data with Rbec, a separate log file is provided as an output for each sample. To predict contaminated samples, a text file containing a list of all paths to the log files needs to be provided before running the following command:
 
-```
-#Contam_detect(log_file, outdir)
+```{r ContamDet, eval = FALSE}
+Contam_detect(log_file, outdir)
 ```
 
 This command will generate a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file with predicted contaminated samples are generated. As a general rule, 90% or more of reads should be corrected in clean SynCom samples.
