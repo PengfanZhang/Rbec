@@ -1,7 +1,7 @@
 #' Reference-based error correction of amplicon sequencing data
 #'
 #' @description
-#' This function fits the loess regression to the error matrix
+#' This function fits the loess regression to the error matrix (Parts of this script have been adapted from code originally published with DADA2 (Callahan et al., 2016).)
 #'
 #' @details Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
 #' @author  Pengfan Zhang

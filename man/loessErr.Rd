@@ -15,7 +15,7 @@ loessErr(trans, min_err_rate=1e-07)
 Returns the loess fitted error matrix
 }
 \description{
-This function fits the loess regression to the error matrix
+This function fits the loess regression to the error matrix (Parts of this script have been adapted from code originally published with DADA2 (Callahan et al., 2016).)
 }
 \details{
 Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
