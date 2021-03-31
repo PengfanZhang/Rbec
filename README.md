@@ -49,7 +49,7 @@ awk 'BEGIN{seqs=""}{if(/^>/){if(seqs!=""){print seqs;seqs=""}; print $0} else{se
 After preparation of the input files, Rbec can be run to estimate SynCom community profiles. An example with a small test dataset from a single bacterial strain illustrates this process:
 
 ```
-fq <- system.file("extdata", "test_raw_merged_reads.fastq", package="Rbec")
+fq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package="Rbec")
 
 ref <- system.file("extdata", "test_ref.fasta", package="Rbec")
 
