@@ -73,7 +73,7 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
   error_matrix <- error_ref_matrix[["err"]]
   ref <- error_ref_matrix[["ref"]]
   derep <- error_ref_matrix[["derep"]]
-  print("Finished calculating the transition and error matrices.")
+  message("Finished calculating the transition and error matrices.")
 
   # calculate abundance probabilities
   lambda_out <- abd_prob(derep, ref, error_matrix)

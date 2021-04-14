@@ -51,7 +51,7 @@ consis_err <- function(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0
 
     # update estimated abundances for each reference sequence
     ref$est_abd[unique(lambda_out$Ref_ID)] <- est_abd
-    print(ref$est_abd)
+    message(ref$est_abd)
 
     # extract raw sequences that belong to the error-corrected unique sequences found in the previous round
     current_round <- which(derep[["map"]] %in% previous_round)
@@ -79,8 +79,8 @@ consis_err <- function(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0
 
     if (diff_abs < max_diff_abs & diff_ratio <= max_diff_ratio) {
 
-      print(diff_abs)
-      print(diff_ratio)
+      message(diff_abs)
+      message(diff_ratio)
       message("The model reached consistency after ", n ," iteration(s)")
 
       final_abd <- numeric(0)
@@ -107,8 +107,8 @@ consis_err <- function(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0
     }
     else {
 
-      print(diff_abs)
-      print(diff_ratio)
+      message(diff_abs)
+      message(diff_ratio)
       n <- n+1
 
     }

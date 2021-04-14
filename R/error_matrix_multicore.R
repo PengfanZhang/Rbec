@@ -74,9 +74,9 @@ error_m <- function(fq, ref, sample_size=10000, threads, ascii) {
     que2ref <- foreach::foreach(x=uniseqs, .combine='rbind') %dopar% findbest(x)
     stopImplicitCluster()
     que2ref <- as.character(que2ref[, 2])
-    print("Finished finding the best reference sequences for each unique sequences.")
+    message("Finished finding the best reference sequences for each unique sequences.")
     t2 <- Sys.time()
-    print(t2-t1)
+    message(t2-t1)
 
     # sample raw sequences for transition matrix generation
     sample_label <- sample(1:(length(raw_data)/4), sample_size)
