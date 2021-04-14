@@ -9,8 +9,7 @@
 #' @param s2 A \code{character(1)} of DNA sequence 2.
 #' @param kmer_size Kmer size.
 #' @return The kmer distance between two sequences
-#'
-#' @export
+#' @noRd
 #'
 kmer_dist <- function(s1, s2, kmer_size) {
     .Call(`_Rbec_kmer_dist`, s1, s2, kmer_size)

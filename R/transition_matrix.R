@@ -11,11 +11,10 @@
 #' @param ascii ascii characters used to encode phred scores
 #'
 #' @usage trans_m(query, ascii)
-#' @examples
 #'
 #' @return The output is a 20 by 43 matrix containing the counts for different kinds of transitions
 #'
-#' @export
+#' @noRd
 #'
 
 trans_m <- function(query, ascii) {

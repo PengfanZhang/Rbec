@@ -18,11 +18,10 @@
 #' @import doParallel
 #'
 #' @usage error_m(fq, ref, sample_size, threads, ascii)
-#' @examples
 #'
 #' @return The output is a 20 by 43 transition probability matrix
 #'
-#' @export
+#' @noRd
 #'
 
 error_m <- function(fq, ref, sample_size=10000, threads, ascii) {

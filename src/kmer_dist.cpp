@@ -13,8 +13,7 @@ using namespace std;
 //' @param s2 A \code{character(1)} of DNA sequence 2.
 //' @param kmer_size Kmer size.
 //' @return The kmer distance between two sequences
-//'
-//' @export
+//' @noRd
 //'
 // [[Rcpp::export]]
 

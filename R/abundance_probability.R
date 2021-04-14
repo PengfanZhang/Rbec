@@ -11,11 +11,10 @@
 #' @param error_matrix The error matrix from the former iteration
 #'
 #' @usage abd_prob(derep, ref, error_matrix)
-#' @examples
 #'
 #' @return Returns the lambda value and pvalue for each reads
 #'
-#' @export
+#' @noRd
 #'
 
 abd_prob <- function(derep, ref, error_matrix) {

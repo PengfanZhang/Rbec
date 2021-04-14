@@ -10,9 +10,10 @@
 #' @param min_err_rate the minimum transition probability for each substitution or insertion case
 #'
 #' @usage loessErr(trans, min_err_rate=1e-07)
-#' @examples
 #'
 #' @return Returns the loess fitted error matrix
+#'
+#' @noRd
 #'
 
 

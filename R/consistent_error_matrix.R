@@ -19,11 +19,10 @@
 #' @param max_diff_ratio the maximum difference in the percentages of corrected reads between two iterations
 #'
 #' @usage consis_err(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0.05, min_P=1e-40, max_diff_abs=100, max_diff_ratio=0.01)
-#' @examples
 #'
 #' @return Returns the final files
 #'
-#' @export
+#' @noRd
 #'
 
 consis_err <- function(fq, derep, ref, lambda_out, sampling_size, ascii, min_E=0.05, min_P=1e-40, max_diff_abs=100, max_diff_ratio=0.01){
