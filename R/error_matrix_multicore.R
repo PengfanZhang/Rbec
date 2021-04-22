@@ -26,6 +26,7 @@
 
 error_m <- function(fq, ref, sample_size=10000, threads, ascii) {
 
+    x <- NA
     t1 <- Sys.time()
 
     # read FASTQ file
@@ -79,7 +80,7 @@ error_m <- function(fq, ref, sample_size=10000, threads, ascii) {
     message(t2-t1)
 
     # sample raw sequences for transition matrix generation
-    sample_label <- sample(1:(length(raw_data)/4), sample_size)
+    sample_label <- sample(seq_len(length(raw_data)/4), sample_size)
     seqs <- raw_data[sample_label*4-2]
     seqs <- toupper(seqs)
     qual <- raw_data[sample_label*4]

@@ -58,7 +58,7 @@ fq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package="Rbec")
 
 ref <- system.file("extdata", "test_ref.fasta", package="Rbec")
 
-Rbec(fq, ref, "./", 1, 500, 33)
+Rbec(fq, ref, tempdir(), 1, 500, 33)
 ```
 
 Users can merge the profiling tables from different samples into a single one by using 'mergeSequenceTables' function in DADA2.

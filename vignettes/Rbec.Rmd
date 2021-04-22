@@ -49,11 +49,11 @@ Rbec(fq, ref, tempdir(), 1, 500, 33)
 
 One of the main sources of technical variation in gnotobiotic experiments is caused by microbial contaminations occurring during the development of the experiment or already present during input SynCom preparation. One of the features of Rbec is the assessment of likely contaminated samples based the recruitment ratio of sequencing reads across samples. When analysing data with Rbec, a separate log file is provided as an output for each sample. To predict contaminated samples, a text file containing a list of all paths to the log files needs to be provided before running the following command:
 
-```{r Contam_detect, eval = FALSE}
-log_path <- list.files(paste(path.package("Rbec"), "inst/extdata/contamination_test", sep="/"), recursive=TRUE, full.names=TRUE)
-dir.create("test_tmp")
-writeLines(log_path, "test_tmp/log_file")
-Contam_detect("test_tmp/log_file", "test_tmp")
+```{r Contam_detect, eval = TRUE}
+log_path <- list.files(paste(path.package("Rbec"), "extdata/contamination_test", sep="/"), recursive=TRUE, full.names=TRUE)
+log_file <- tempfile()
+writeLines(log_path, log_file)
+Contam_detect(log_file, tempdir())
 ```
 
 This command will generate a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file with predicted contaminated samples are generated. As a general rule, 90% or more of reads should be corrected in clean SynCom samples.

@@ -25,7 +25,7 @@
 #'
 #' ref <- system.file("extdata", "test_ref.fasta", package = "Rbec")
 #'
-#' Rbec(fastq=fastq, reference=ref, outdir="./", threads=1, sampling_size=500, ascii=33)
+#' Rbec(fastq=fastq, reference=ref, outdir=tempdir(), threads=1, sampling_size=500, ascii=33)
 #'
 #' @return lambda_final.out the lambda value and pvalue of the Poisson distribution for each read
 #' @return error_matrix_final.out the error matrix in the final iteration
@@ -39,91 +39,91 @@
 Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=33, min_cont_abs=0.03){
 
 
-  t1 <- Sys.time()
+    t1 <- Sys.time()
 
-  # parse input parameters and read reference sequences
+    # parse input parameters and read reference sequences
 
-  tryCatch(
-    para_check <- as.numeric(threads),
-    error = function(e) {stop("parameters 'threads' should be intergers!")},
-    warning =  function(w) {stop("parameters 'threads' should be intergers!")}
-  )
+    tryCatch(
+        para_check <- as.numeric(threads),
+        error = function(e) {stop("parameters 'threads' should be intergers!")},
+        warning =  function(w) {stop("parameters 'threads' should be intergers!")}
+    )
 
-  tryCatch(
-    para_check <- as.numeric(sampling_size),
-    error = function(e) {stop("parameters 'sampling_size' should be intergers!")},
-    warning =  function(w) {stop("parameters 'sampling_size' should be intergers!")}
-  )
+    tryCatch(
+        para_check <- as.numeric(sampling_size),
+        error = function(e) {stop("parameters 'sampling_size' should be intergers!")},
+        warning =  function(w) {stop("parameters 'sampling_size' should be intergers!")}
+    )
 
-  tryCatch(
-    para_check <- as.numeric(ascii),
-    error = function(e) {stop("parameters 'ascii' should be intergers!")},
-    warning =  function(w) {stop("parameters 'ascii' should be intergers!")}
-  )
+    tryCatch(
+        para_check <- as.numeric(ascii),
+        error = function(e) {stop("parameters 'ascii' should be intergers!")},
+        warning =  function(w) {stop("parameters 'ascii' should be intergers!")}
+    )
 
 
-  ref <- read_lines(reference)
+    ref <- read_lines(reference)
 
-  ref_name <- data.frame(name=ref[which(seq_along(ref)%%2==1)], seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
-  ref_name$name <- sub(">", "", ref_name$name)
-  ref <- data.frame(ref_seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
+    ref_name <- data.frame(name=ref[which(seq_along(ref)%%2==1)], seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
+    ref_name$name <- sub(">", "", ref_name$name)
+    ref <- data.frame(ref_seq=toupper(ref[which(seq_along(ref)%%2==0)]), stringsAsFactors=FALSE)
 
-  # calculate the error matrix
-  error_ref_matrix <- error_m(fastq, ref, sampling_size, threads, ascii)
-  error_matrix <- error_ref_matrix[["err"]]
-  ref <- error_ref_matrix[["ref"]]
-  derep <- error_ref_matrix[["derep"]]
-  message("Finished calculating the transition and error matrices.")
+    # calculate the error matrix
+    error_ref_matrix <- error_m(fastq, ref, sampling_size, threads, ascii)
+    error_matrix <- error_ref_matrix[["err"]]
+    ref <- error_ref_matrix[["ref"]]
+    derep <- error_ref_matrix[["derep"]]
+    message("Finished calculating the transition and error matrices.")
 
-  # calculate abundance probabilities
-  lambda_out <- abd_prob(derep, ref, error_matrix)
+    # calculate abundance probabilities
+    lambda_out <- abd_prob(derep, ref, error_matrix)
 
-  final_list <- consis_err(fastq, derep, ref, lambda_out, sampling_size, ascii)
+    final_list <- consis_err(fastq, derep, ref, lambda_out, sampling_size, ascii)
 
-  straintab <- final_list[["table"]]
-  straintab[, 1] <- ref_name$name[match(straintab[, 1], ref_name[, 2])]
+    straintab <- final_list[["table"]]
+    straintab[, 1] <- ref_name$name[match(straintab[, 1], ref_name[, 2])]
 
-  lambda_out <- final_list[["lambda_out"]]
-  lambda_out[, 2] <- ref_name$name[match(lambda_out[, 2], ref_name[, 2])]
+    lambda_out <- final_list[["lambda_out"]]
+    lambda_out[, 2] <- ref_name$name[match(lambda_out[, 2], ref_name[, 2])]
 
-  # identify potential contaminants from reads which cannot be corrected and have high abundance (larger than min_cont_abs)
-  contamination <- which(final_list$lambda_out$Corrected=="No" &
+    # identify potential contaminants from reads which cannot be corrected and have high abundance (larger than min_cont_abs)
+    contamination <- which(final_list$lambda_out$Corrected=="No" &
                          final_list$lambda_out$Obs_abd/error_ref_matrix$total_reads>=min_cont_abs)
-  # output sequences of potential contaminants
-  conta_out <- data.frame(stringsAsFactors=FALSE)
-  c <- 1
-  for (i in contamination){
-    conta_rec <- paste(">Contamination_seq", c, sep="")
-    conta_rate <- derep$uniques[i]/error_ref_matrix$total_reads
-    conta_rec <- paste(conta_rec, conta_rate, sep=";")
-    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
-    conta_rec <- names(derep$uniques[i])
-    conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
-    c <- c+1
-  }
+    # output sequences of potential contaminants
+    conta_out <- data.frame(stringsAsFactors=FALSE)
+    c <- 1
+    for (i in contamination){
+        conta_rec <- paste(">Contamination_seq", c, sep="")
+        conta_rate <- derep$uniques[i]/error_ref_matrix$total_reads
+        conta_rec <- paste(conta_rec, conta_rate, sep=";")
+        conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
+        conta_rec <- names(derep$uniques[i])
+        conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
+        c <- c+1
+    }
 
-  # output final tables and logs
+    # output final tables and logs
 
-  dir.create(outdir)
-  lambdaout <- paste(outdir, "lambda_final.out", sep="/")
-  emout <- paste(outdir, "error_matrix_final.out", sep="/")
-  straintabout <- paste(outdir, "strain_table.txt", sep="/")
-  contaout <- paste(outdir, "contamination_seq.fna", sep="/")
-  logout <- paste(outdir, "rbec.log", sep="/")
+    dir.create(outdir)
+    lambdaout <- paste(outdir, "lambda_final.out", sep="/")
+    emout <- paste(outdir, "error_matrix_final.out", sep="/")
+    straintabout <- paste(outdir, "strain_table.txt", sep="/")
+    contaout <- paste(outdir, "contamination_seq.fna", sep="/")
+    logout <- paste(outdir, "rbec.log", sep="/")
 
-  write.table(lambda_out, file= lambdaout, quote=FALSE, sep="\t", row.names = FALSE)
-  write.table(final_list[["err"]], file= emout, quote=FALSE, sep="\t")
-  write.table(straintab, file= straintabout, quote=FALSE, sep="\t", row.names=FALSE)
-  write.table(conta_out, file = contaout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
+    write.table(lambda_out, file= lambdaout, quote=FALSE, sep="\t", row.names = FALSE)
+    write.table(final_list[["err"]], file= emout, quote=FALSE, sep="\t")
+    write.table(straintab, file= straintabout, quote=FALSE, sep="\t", row.names=FALSE)
+    write.table(conta_out, file = contaout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
 
-  t2 <- Sys.time()
-  time.used <- difftime(t2, t1, units = "mins")
-  time.used <- sub("Time difference of ","",time.used)
-  time.used <- paste("Total time used:", time.used, "mins", sep=" ")
-  summ <- paste(final_list$total_corrected/error_ref_matrix$total_reads*100, "% of reads were corrected!", sep="")
+    t2 <- Sys.time()
+    time.used <- difftime(t2, t1, units = "mins")
+    time.used <- sub("Time difference of ","",time.used)
+    time.used <- paste("Total time used:", time.used, "mins", sep=" ")
+    summ <- paste(final_list$total_corrected/error_ref_matrix$total_reads*100, "% of reads were corrected!", sep="")
 
-  log_out <- rbind(time.used, summ)
-  write.table(log_out, file = logout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
+    log_out <- rbind(time.used, summ)
+    write.table(log_out, file = logout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
 
 }
 

@@ -19,13 +19,13 @@
 
 abd_prob <- function(derep, ref, error_matrix) {
 
-  lambda_out <- data.frame(numeric(0))
-  seqs <- names(derep[["uniques"]])
-  abd <- derep[["uniques"]]
-  seqs <- toupper(seqs)
-  bestref <- derep[["bestref"]]
+    lambda_out <- data.frame(numeric(0))
+    seqs <- names(derep[["uniques"]])
+    abd <- derep[["uniques"]]
+    seqs <- toupper(seqs)
+    bestref <- derep[["bestref"]]
 
-  input_data <- data.frame(seqs, abd, bestref, stringsAsFactors=FALSE)
+    input_data <- data.frame(seqs, abd, bestref, stringsAsFactors=FALSE)
 
     # calculate the estimated abundance of reference sequences by summing up the abundances of
     # reads potentailly produced from that reference sequence
@@ -35,24 +35,24 @@ abd_prob <- function(derep, ref, error_matrix) {
 
     # function for lambda calculation
     lambda_calculation <- function(seq, abd, bestref) {
-      best_match <- match(bestref, ref[, 1])
-      align_out <- nwalign(seq, bestref)
-      Seq1align <- align_out[1]
-      Seq2align <- align_out[2]
-      Seq1align <- unlist(strsplit(Seq1align, ""))
-      Seq2align <- unlist(strsplit(Seq2align, ""))
-      align_pairs <- paste(Seq2align, Seq1align, sep="2")
-      align_pairs <- align_pairs[! endsWith(align_pairs, "-")]
-      qual <- round(derep[["quals"]][match(seq, names(derep[["uniques"]])), ], digits=0)
-      qual <- as.character(qual[!is.na(qual)])
-      retain_index <- which(!align_pairs %in% c("A2A", "C2C", "G2G", "T2T"))
-      align_pairs <- align_pairs[retain_index]
-      qual <- qual[retain_index]
-      data4lambda <- data.frame(align_pairs, qual)
-      tp <- apply(data4lambda, 1, function(x) error_matrix[x[1], x[2]])
-      lambda0 <- prod(tp)
-      lambda_out <- rbind(c(lambda0, best_match, abd))
-      return(lambda_out)
+        best_match <- match(bestref, ref[, 1])
+        align_out <- nwalign(seq, bestref)
+        Seq1align <- align_out[1]
+        Seq2align <- align_out[2]
+        Seq1align <- unlist(strsplit(Seq1align, ""))
+        Seq2align <- unlist(strsplit(Seq2align, ""))
+        align_pairs <- paste(Seq2align, Seq1align, sep="2")
+        align_pairs <- align_pairs[! endsWith(align_pairs, "-")]
+        qual <- round(derep[["quals"]][match(seq, names(derep[["uniques"]])), ], digits=0)
+        qual <- as.character(qual[!is.na(qual)])
+        retain_index <- which(!align_pairs %in% c("A2A", "C2C", "G2G", "T2T"))
+        align_pairs <- align_pairs[retain_index]
+        qual <- qual[retain_index]
+        data4lambda <- data.frame(align_pairs, qual)
+        tp <- apply(data4lambda, 1, function(x) error_matrix[x[1], x[2]])
+        lambda0 <- prod(tp)
+        lambda_out <- rbind(c(lambda0, best_match, abd))
+        return(lambda_out)
     }
 
     # calculate lambdas for each dereplicated sequence

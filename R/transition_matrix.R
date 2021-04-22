@@ -26,24 +26,22 @@ trans_m <- function(query, ascii) {
     rownames(trans_matrix) <- trans_kinds
     colnames(trans_matrix) <- as.character(seq(0, 42))
 
-    # TODO: define outside
     tm_cal <- function(que, qual, ref){
 
-    # perform global alignment between query and reference using NW
-    align_out <- nwalign(que, ref)
-    Seq1align <- align_out[1]
-    Seq2align <- align_out[2]
-    Seq1align <- unlist(strsplit(Seq1align, ""))
-    Seq2align <- unlist(strsplit(Seq2align, ""))
-    align_pairs <- paste(Seq2align, Seq1align, sep="2")
-    align_pairs <- align_pairs[!endsWith(align_pairs, "-")]
+        # perform global alignment between query and reference using NW
+        align_out <- nwalign(que, ref)
+        Seq1align <- align_out[1]
+        Seq2align <- align_out[2]
+        Seq1align <- unlist(strsplit(Seq1align, ""))
+        Seq2align <- unlist(strsplit(Seq2align, ""))
+        align_pairs <- paste(Seq2align, Seq1align, sep="2")
+        align_pairs <- align_pairs[!endsWith(align_pairs, "-")]
 
-    # check if the quality system is phred 33 or 64
-    qual <- as.character(strtoi(charToRaw(paste((qual), collapse="")), 16L)-ascii)
+        # check if the quality system is phred 33 or 64
+        qual <- as.character(strtoi(charToRaw(paste((qual), collapse="")), 16L)-ascii)
 
-    align_data <- data.frame(alig=align_pairs, qual=qual, stringsAsFactors=FALSE)
-    return(align_data)
-
+        align_data <- data.frame(alig=align_pairs, qual=qual, stringsAsFactors=FALSE)
+        return(align_data)
     }
 
     # for all query sequences, calculate global alignments to reference sequence and corresponding transitions
@@ -51,8 +49,8 @@ trans_m <- function(query, ascii) {
 
     # transform transitions for each aligned querity to transition matrix
     align_data <- data.frame(table(align_data), stringsAsFactors=FALSE)
-    for(i in 1:nrow(align_data)){
-      trans_matrix[as.character(align_data[i, 1]), as.character(align_data[i, 2])] <- align_data[i, 3]
+    for(i in seq_len(nrow(align_data))){
+        trans_matrix[as.character(align_data[i, 1]), as.character(align_data[i, 2])] <- align_data[i, 3]
     }
 
     return(trans_matrix)

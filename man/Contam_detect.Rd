@@ -23,7 +23,13 @@ This function is designed for predicting the contaminated samples
 Ruben Garrido-Oter's group, Plant-Microbe interaction, Max Planck Institute for Plant Breeding Research
 }
 \examples{
-log_file <- system.file("extdata", "rbec_test.list", package = "Rbec")
+#log_file <- system.file("extdata", "rbec_test.list", package = "Rbec")
+log_path <- list.files(paste(path.package("Rbec"), 
+	"extdata/contamination_test", sep="/"), 
+	recursive=TRUE, full.names=TRUE)
+log_file <- tempfile()
+writeLines(log_path, log_file)
+Contam_detect(log_file, tempdir())
 
 }
 \author{

@@ -43,7 +43,7 @@ fastq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package = "Rbe
 
 ref <- system.file("extdata", "test_ref.fasta", package = "Rbec")
 
-Rbec(fastq=fastq, reference=ref, outdir="./", threads=1, sampling_size=500, ascii=33)
+Rbec(fastq=fastq, reference=ref, outdir=tempdir(), threads=1, sampling_size=500, ascii=33)
 
 }
 \author{
