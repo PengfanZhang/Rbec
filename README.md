@@ -71,11 +71,11 @@ One of the main sources of technical variation in gnotobiotic experiments is cau
 ```
 log_path <- list.files(paste(path.package("Rbec"), "inst/extdata/contamination_test", sep="/"), recursive=TRUE, full.names=TRUE)
 
-dir.create("test_tmp")
+log_file <- tempfile()
 
-writeLines(log_path, "test_tmp/log_file")
+writeLines(log_path, log_file)
 
-Contam_detect("test_tmp/log_file", "test_tmp")
+Contam_detect(log_file, tempdir())
 ```
 
 This command will generate a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file with predicted contaminated samples are generated. As a general rule, 90% or more of reads should be corrected in clean SynCom samples.

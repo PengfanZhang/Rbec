@@ -1,23 +1,26 @@
 Package: Rbec
 Type: Package
 Title: Rbec: a tool for analysis of amplicon sequencing data from synthetic microbial communities
-Version: 0.99.6
+Version: 0.99.7
 Authors@R: person("Pengfan", "Zhang", email = "pzhang@mpipz.mpg.de", role = c("aut", "cre"))
 Description: Rbec is a adapted version of DADA2 for analyzing amplicon sequencing data
     from synthetic communities (SynComs), where the reference sequences for each strain exists.
     Rbec can not only accurately profile the microbial compositions in SynComs, but also predict 
     the contaminants in SynCom samples.
-License: GPL
+License: LGPL-3
 Imports:
     Rcpp (>= 1.0.6),
     dada2,
     ggplot2,
     readr,
     doParallel,
-    foreach
+    foreach,
+    grDevices,
+    stats,
+    utils
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
-biocViews: Software, WorkflowStep
+biocViews: Sequencing, MicrobialStrain, Microbiome
 Suggests: 
     knitr,
     rmarkdown
