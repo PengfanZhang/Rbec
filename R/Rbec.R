@@ -93,9 +93,14 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
     conta_out <- data.frame(stringsAsFactors=FALSE)
     c <- 1
     for (i in contamination){
+	conta_align <- nwalign(names(derep$uniques[i]), final_list$lambda_out$Ref_ID[i])
+	conta_align1 <- unlist(strsplit(conta_align[1], ""))
+	conta_align2 <- unlist(strsplit(conta_align[2], ""))
+	iden <- paste(round(length(which(con_align1==con_align2))/length(con_align1)*100, 1), "%", sep="")
+	conta_iden <- paste(lambda_out$Ref_ID[i], iden, sep=":")
         conta_rec <- paste(">Contamination_seq", c, sep="")
-        conta_rate <- derep$uniques[i]/error_ref_matrix$total_reads
-        conta_rec <- paste(conta_rec, conta_rate, sep=";")
+        conta_rate <- paste("Abundance:", round(derep$uniques[i]/error_ref_matrix$total_reads, 1), "%", sep="")
+        conta_rec <- paste(conta_rec, conta_rate, conta_iden, sep="; ")
         conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
         conta_rec <- names(derep$uniques[i])
         conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
