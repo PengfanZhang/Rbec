@@ -99,7 +99,7 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
 	iden <- paste(round(length(which(conta_align1==conta_align2))/length(conta_align1)*100, 1), "%", sep="")
 	conta_iden <- paste(lambda_out$Ref_ID[i], iden, sep=":")
         conta_rec <- paste(">Contamination_seq", c, sep="")
-        conta_rate <- paste("Abundance:", round(derep$uniques[i]/error_ref_matrix$total_reads, 1), "%", sep="")
+        conta_rate <- paste("Abundance:", round(derep$uniques[i]/error_ref_matrix$total_reads*100, 1), "%", sep="")
         conta_rec <- paste(conta_rec, conta_rate, conta_iden, sep="; ")
         conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
         conta_rec <- names(derep$uniques[i])
