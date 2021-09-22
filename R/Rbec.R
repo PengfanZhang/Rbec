@@ -17,7 +17,7 @@
 #' @param min_E the minimum expectation of the Possion distribution for the identification of paralogues, default 0.05
 #' @param min_P the minimum P value threshold of the Possion distribution to correct a read, default 1e-40
 #' @param ref_seeker the method for finding the candidate error-producing reference sequence for a tag showing identical lowest K-mer distance to multiple references. 1 for the abundance-based method; 2 for the transition probability-based method, default 1.
-#' @param cn the copy number table documenting the copy number of the marker gene in each strain. Rbec will normalize the strain abundance if the copy number is available
+#' @param cn the path to the copy number table documenting the copy number of the marker gene in each strain (header inclusive), otherwise Rbec will normalize the abundance based on the internally inferred copy number, which tends to underestimate the true copy number, defaul NULL. 
 #'
 #' @import readr
 #' @import dada2
@@ -106,13 +106,13 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
     conta_out <- data.frame(stringsAsFactors=FALSE)
     c <- 1
     for (i in contamination){
-	conta_align <- nwalign(names(derep$uniques[i]), final_list$lambda_out$Ref_ID[i])
-	conta_align1 <- unlist(strsplit(conta_align[1], ""))
-	conta_align2 <- unlist(strsplit(conta_align[2], ""))
-	iden <- paste(round(length(which(conta_align1==conta_align2))/length(conta_align1)*100, 1), "%", sep="")
-	conta_iden <- paste(lambda_out$Ref_ID[i], iden, sep=":")
+	      conta_align <- nwalign(names(derep$uniques[i]), final_list$lambda_out$Ref_ID[i])
+      	conta_align1 <- unlist(strsplit(conta_align[1], ""))
+      	conta_align2 <- unlist(strsplit(conta_align[2], ""))
+      	iden <- paste(round(length(which(conta_align1==conta_align2))/length(conta_align1)*100, 1), "%", sep="")
+	      conta_iden <- paste(lambda_out$Ref_ID[i], iden, sep=":")
         conta_rec <- paste(">Contamination_seq", c, sep="")
-	conta_abd <- paste("Observed Abundace:", derep$uniques[i], sep="")
+      	conta_abd <- paste("Observed Abundace:", derep$uniques[i], sep="")
         conta_rate <- paste("Relative Abundance:", round(derep$uniques[i]/error_ref_matrix$total_reads*100, 1), "%", sep="")
         conta_rec <- paste(conta_rec, conta_abd, conta_rate, conta_iden, sep="; ")
         conta_out <- rbind(conta_out, conta_rec, stringsAsFactors = FALSE)
@@ -124,14 +124,22 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
     #output paralogue sequences for each strain
     paralog_out <- data.frame(stringsAsFactors=FALSE)
     c <- 1
+    cn_internal_inference <- c()
     for (i in seq(nrow(lambda_out))){
       if (lambda_out$Lambda[i]!=1 & lambda_out$E[i]>=min_E & lambda_out$Corrected[i]=="Yes" & lambda_out$Obs_abd[i]/max(lambda_out$Obs_abd[which(lambda_out$Ref_ID==lambda_out$Ref_ID[i])])>=1/15){
         paralog_rec <- paste(paste(">", "Seq_", c, sep=""), paste("Paralogue", lambda_out$Ref_ID[i], sep = "="), sep = ";")
         paralog_out <- rbind(paralog_out, paralog_rec, stringsAsFactors=FALSE)
         paralog_out <- rbind(paralog_out, names(derep$uniques[i]), stringsAsFactors=FALSE)
+	      cn_internal_inference <- c(cn_internal_inference, lambda_out$Ref_ID[i])
         c <- c+1
       }
     }
+    if (is.null(cn)){
+      cp_n <- as.data.frame(table(cn_internal_inference))
+      cp_n$Freq <- cp_n$Freq + 1
+      straintab_norm <- straintab
+      straintab_norm$Corrected_Abundance <- round(straintab_norm$Corrected_Abundance/cp_n[match(straintab_norm$Ref_seq, cp_n[, 1]), 2])
+	}
 
     # output final tables and logs
 
@@ -147,9 +155,7 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
     write.table(lambda_out, file= lambdaout, quote=FALSE, sep="\t", row.names = FALSE)
     write.table(final_list[["err"]], file= emout, quote=FALSE, sep="\t")
     write.table(straintab, file= straintabout, quote=FALSE, sep="\t", row.names=FALSE)
-    if (!is.null(cn)){
-      write.table(straintab_norm, file= straintabout_norm, quote=FALSE, sep="\t", row.names=FALSE)
-    }
+    write.table(straintab_norm, file= straintabout_norm, quote=FALSE, sep="\t", row.names=FALSE)
     write.table(conta_out, file = contaout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
     write.table(paralog_out, file=paralogout, quote=FALSE, sep="", col.names = FALSE, row.names = FALSE)
 

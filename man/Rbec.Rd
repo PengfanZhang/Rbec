@@ -29,7 +29,7 @@ Rbec(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=33, min_cont
 
 \item{ref_seeker}{the method for finding the candidate error-producing reference sequence for a tag showing identical lowest K-mer distance to multiple references. 1 for the abundance-based method; 2 for the transition probability-based method, default 1.}
 
-\item{cn}{the copy number table documenting the copy number of the marker gene in each strain. Rbec will normalize the strain abundance if the copy number is available}
+\item{cn}{the path to the copy number table documenting the copy number of the marker gene in each strain (header inclusive), otherwise Rbec will normalize the abundance based on the internally inferred copy number, which tends to underestimate the true copy number, defaul NULL.}
 }
 \value{
 lambda_final.out the lambda value and pvalue of the Poisson distribution for each read
