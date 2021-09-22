@@ -23,6 +23,9 @@ Content
 
 [3. Demo from raw data](#Demo-from-raw-data)
 
+[4. Credits](#Credits)
+
+
 ## Installation
 
 Rbec is a free R package. To install Rbec, one needs to have the 'dada2' package (https://benjjneb.github.io/dada2/dada-installation.html) installed beforehand manually with the following command:
@@ -146,7 +149,6 @@ This command will generate a plot showing the distribution of percentages of cor
 
 Since Rbec is a reference-based method for error correction in sequencing reads, the accuracy of the reference sequence would critically influence the result. Inference of marker gene sequences from draft genome assemblies or via Sanger sequencing might lead to errors that may negatively impact the accuracy of the results. If errors are present in the reference sequence of a certain strain and no reads can be perfectly aligned to that reference (with an initial abundance of 0 for that reference), Rbec flags this strain as absent with an abundance of 0. One tricky way to overcome this issue in which references are not 100% accurate is that you can look up the contamination sequences outputted by the Rbec function at the first round and align the contamination sequences to the references of strains that are missing in the community. When this occurs, the correct sequence will be flagged by Rbec as a putative contaminant. The user can use this information to replace the erroneous entry in the reference database and re-run Rbec. This should be done with care to avoid true contaminants to be mistaken by members of the original input SynCom when their phylogenetic distance is low.
 
-Credits
----
+## Credits
 
 Pengfan Zhang (pzhang@mpipz.mpg.de); Ruben Garrido-Oter (garridoo@mpipz.mpg.de)
