@@ -146,18 +146,18 @@ cutadapt -g AACMGGATTAGATACCC -a GGAAGGTGGGGATGACGT -n 2 -o testdata/reference_V
 Rbec currently only supports the reference database in a non-wrapped format. Towards this end, the following Unix command can be used to transform the wrapped sequences into non-wrapped ones.
 
 ```
-awk 'BEGIN{seqs=""}{if(/^>/){if(seqs!=""){print seqs;seqs=""}; print $0} else{seqs=seqs""$0}}END{print seqs}' reference_V5V7.fasta > reference_V5V7_nonwrapped.fasta
+awk 'BEGIN{seqs=""}{if(/^>/){if(seqs!=""){print seqs;seqs=""}; print $0} else{seqs=seqs""$0}}END{print seqs}' testdata/reference_V5V7.fasta > testdata/reference_V5V7_nonwrapped.fasta
 ```
 or use `Seqkit`
 ```
-seqkit seq -w 0 -o reference_V5V7_nonwrapped.fasta reference_V5V7.fasta
+seqkit seq -w 0 -o testdata/reference_V5V7_nonwrapped.fasta testdata/reference_V5V7.fasta
 ```
 
 ### Preprocess the rawdata
 
 Firstly, pair-end raw reads should be merged by using any reads merging tools:
 ```
-flash2 test_R1.fastq.gz test_R2.fastq.gz -M 250 -o test -x 0.25 -d ./
+flash2 testdata/test_R1.fastq.gz testdata/test_R2.fastq.gz -M 250 -o test -x 0.25 -d testdata
 ```
 usearch -fastq_filter test.extendedFrags.fastq -fastqout test.extendedFrags.filtered.fastq -fastq_maxns 0 -fastq_minlen 200
 
@@ -165,14 +165,14 @@ usearch -fastq_filter test.extendedFrags.fastq -fastqout test.extendedFrags.filt
 
 Amplicon reads should be manually filtered by excluding reads with ambiguous reads with USEARCH or a similar software before running Rbec and short reads are removed to avoid dimers. Following is an example of removing reads with ambiguous reads with USEARCH:
 ```
-usearch -fastq_filter test.extendedFrags.fastq -fastqout test.extendedFrags.filtered.fastq -fastq_maxns 0 -fastq_minlen 200
+usearch -fastq_filter testdata/test.extendedFrags.fastq -fastqout testdata/test.extendedFrags.filtered.fastq -fastq_maxns 0 -fastq_minlen 200
 ```
 
 ### Start with Rbec
 
 Now, with the two files in hands, you can invoke Rbec in your R environment to explore your samples:
 ```
-Rbec(test.extendedFrags.filtered.fastq, reference_V5V7_nonwrapped.fasta, 1, 2000)
+Rbec("testdata/test.extendedFrags.filtered.fastq", "testdata/reference_V5V7_nonwrapped.fasta", 1, 2000)
 ```
 
 ## Credits
