@@ -73,9 +73,7 @@ Output
 `lambda_final.out`: the lambda value and pvalue of the Poisson distribution for each read
 
 `error_matrix_final.out`: the error matrix in the final iteration
-
-
-
+---
 
 1. Characterizing microbial communities in SynComs
 ---
