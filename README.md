@@ -33,7 +33,9 @@ Parameters
 ---
 
 `fastq`: the path of the fastq file containg merged amplicon sequencing reads (Ns are not allowed in the reads)
+
 `reference`: the path of the unique reference sequences, each sequence must be in one line (Ns are not allowed in the sequences)
+
 `outdir`: the output directory, which should be created by the user
 `threads`: the number of threads used, default 1
 `sampling_size`: the sampling size for calculating the error matrix, default 5000
