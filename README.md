@@ -4,8 +4,11 @@ Our manuscript is currently available as a preprint in [*bioRxiv*](https://doi.o
 
 Rbec is a tool for analysing amplicon sequencing data from synthetic communities (SynComs), where the reference sequences for each strain are already available. Rbec can accurately correct PCR and sequencing errors, identify intra-species polymorphic variation, and detect contaminations in SynCom amplicon data.
 
-Installation
+Content
 ---
+[Installation](#Installation)
+
+## Installation
 
 Rbec is a free R package. To install Rbec, one needs to have the 'dada2' package (https://benjjneb.github.io/dada2/dada-installation.html) installed beforehand manually with the following command:
 ```
