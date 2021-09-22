@@ -35,7 +35,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("dada2")
 ```
 
-Then you can directly download with devtools:
+Then you can directly download the newest version with devtools:
 ```
 devtools::install_github("PengfanZhang/Rbec", dependencies = TRUE)
 ```
