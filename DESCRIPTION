@@ -1,7 +1,7 @@
 Package: Rbec
 Type: Package
 Title: Rbec: a tool for analysis of amplicon sequencing data from synthetic microbial communities
-Version: 1.1.3
+Version: 1.1.4
 Authors@R: person("Pengfan", "Zhang", email = "pzhang@mpipz.mpg.de", role = c("aut", "cre"))
 Description: Rbec is a adapted version of DADA2 for analyzing amplicon sequencing data
     from synthetic communities (SynComs), where the reference sequences for each strain exists.
