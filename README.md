@@ -76,7 +76,7 @@ Output
 
 ---
 
-1. Characterizing microbial communities in SynComs
+## 1. Characterizing microbial communities in SynComs
 ---
 
 Rbec can use as an input FASTQ files from either single- or pair-end sequencing data. In addition, a database of reference sequences in FASTA format needs to be provided.
@@ -110,7 +110,7 @@ Rbec(fq, ref, tempdir(), 1, 500, 33)
 
 Users can merge the profiling tables from different samples into a single one by using 'mergeSequenceTables' function in DADA2.
 
-2. Detecting contaminants
+## 2. Detecting contaminants
 ---
 
 One of the main sources of technical variation in gnotobiotic experiments is caused by microbial contaminations occurring during the development of the experiment or already present during input SynCom preparation. One of the features of Rbec is the assessment of likely contaminated samples based the recruitment ratio of sequencing reads across samples. When analysing data with Rbec, a separate log file is provided as an output for each sample. To predict contaminated samples, a text file containing a list of all paths to the log files needs to be provided before running the following command:
