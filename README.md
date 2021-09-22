@@ -11,17 +11,17 @@ Content
 
 [2. Usages](#Usages)
     
-   [Parameters](#Parameters)
+   [-----Parameters](#Parameters)
     
-   [Output files](#Output files)
+   [-----Output files](#Output-files)
     
-   [Characterizing microbial communities in SynComs](#Characterizing microbial communities in SynComs)
+   [-----Characterizing microbial communities in SynComs](#Characterizing-microbial-communities-in-SynComs)
     
-   [Detecting contaminants](#Detecting contaminants)
+   [-----Detecting contaminants](#Detecting-contaminants)
     
-   [Dependence on accurate reference sequences](#Dependence on accurate reference sequences)
+   [-----Dependence on accurate reference sequences](#Dependence-on-accurate-reference-sequences)
 
-[3. Demo from raw data](#Demo from raw data)
+[3. Demo from raw data](#Demo-from-raw-data)
 
 ## Installation
 
