@@ -8,6 +8,13 @@ Content
 ---
 
 [1. Installation](#Installation)
+[2. Usages](#Usages)
+    [Parameters](#Parameters)
+    [Output files](#Output files)
+    [Characterizing microbial communities in SynComs](#Characterizing microbial communities in SynComs)
+    [Detecting contaminants](#Detecting contaminants)
+    [Dependence on accurate reference sequences](#Dependence on accurate reference sequences)
+[3. Demo from raw data](#Demo from raw data)
 
 ## Installation
 
@@ -30,11 +37,11 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("Rbec")
 ```
 
-How to use Rbec?
----
+## Usages
 
-Parameters
----
+
+### Parameters
+
 
 `fastq`: the path of the fastq file containg merged amplicon sequencing reads (Ns are not allowed in the reads)
 
@@ -61,8 +68,7 @@ Parameters
 `cn`: the path to the copy number table documenting the copy number of the marker gene in each strain (header inclusive), otherwise Rbec will normalize the abundance based on the internally inferred copy number, which tends to **underestimate the true copy number**, defaul NULL.
 
 
-Output
----
+### Output files
 
 `strain_table.txt`: the strain composition of the sample
 
@@ -78,9 +84,8 @@ Output
 
 `error_matrix_final.out`: the error matrix in the final iteration
 
----
 
-## 1. Characterizing microbial communities in SynComs
+### Characterizing microbial communities in SynComs
 
 Rbec can use as an input FASTQ files from either single- or pair-end sequencing data. In addition, a database of reference sequences in FASTA format needs to be provided.
 
@@ -113,7 +118,7 @@ Rbec(fq, ref, tempdir(), 1, 500, 33)
 
 Users can merge the profiling tables from different samples into a single one by using 'mergeSequenceTables' function in DADA2.
 
-## 2. Detecting contaminants
+### Detecting contaminants
 
 One of the main sources of technical variation in gnotobiotic experiments is caused by microbial contaminations occurring during the development of the experiment or already present during input SynCom preparation. One of the features of Rbec is the assessment of likely contaminated samples based the recruitment ratio of sequencing reads across samples. When analysing data with Rbec, a separate log file is provided as an output for each sample. To predict contaminated samples, a text file containing a list of all paths to the log files needs to be provided before running the following command:
 
@@ -129,7 +134,7 @@ Contam_detect(log_file, tempdir())
 
 This command will generate a plot showing the distribution of percentages of corrected reads across the whole sample set and a log file with predicted contaminated samples are generated. As a general rule, 90% or more of reads should be corrected in clean SynCom samples.
 
-## 3. Rbec dependence on accurate reference sequences
+### Dependence on accurate reference sequences
 
 
 Since Rbec is a reference-based method for error correction in sequencing reads, the accuracy of the reference sequence would critically influence the result. Inference of marker gene sequences from draft genome assemblies or via Sanger sequencing might lead to errors that may negatively impact the accuracy of the results. If errors are present in the reference sequence of a certain strain and no reads can be perfectly aligned to that reference (with an initial abundance of 0 for that reference), Rbec flags this strain as absent with an abundance of 0. One tricky way to overcome this issue in which references are not 100% accurate is that you can look up the contamination sequences outputted by the Rbec function at the first round and align the contamination sequences to the references of strains that are missing in the community. When this occurs, the correct sequence will be flagged by Rbec as a putative contaminant. The user can use this information to replace the erroneous entry in the reference database and re-run Rbec. This should be done with care to avoid true contaminants to be mistaken by members of the original input SynCom when their phylogenetic distance is low.
