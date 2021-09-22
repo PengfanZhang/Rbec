@@ -6,7 +6,8 @@ Rbec is a tool for analysing amplicon sequencing data from synthetic communities
 
 Content
 ---
-[Installation](#Installation)
+
+[1. Installation](#Installation)
 
 ## Installation
 
