@@ -11,11 +11,11 @@ Content
 
 [2. Usages](#Usages)
     
-   [-----Parameters](#Parameters)
+   [    -Parameters](#Parameters)
     
-   [-----Output files](#Output-files)
+   [\s\s\s\s-Output files](#Output-files)
     
-   [-----Characterizing microbial communities in SynComs](#Characterizing-microbial-communities-in-SynComs)
+   [\s\s\s\sCharacterizing microbial communities in SynComs](#Characterizing-microbial-communities-in-SynComs)
     
    [-----Detecting contaminants](#Detecting-contaminants)
     
