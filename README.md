@@ -54,7 +54,7 @@ Parameters
 
 `ref_seeker`: the method for finding the candidate error-producing reference sequence for a tag showing identical lowest K-mer distance to multiple references. 1 for the abundance-based method; 2 for the transition probability-based method, default 1.
 
-`cn`: the path to the copy number table documenting the copy number of the marker gene in each strain (header inclusive), otherwise Rbec will normalize the abundance based on the internally inferred copy number, which tends to <**underestimate the true copy number**>, defaul NULL.
+`cn`: the path to the copy number table documenting the copy number of the marker gene in each strain (header inclusive), otherwise Rbec will normalize the abundance based on the internally inferred copy number, which tends to **underestimate the true copy number**, defaul NULL.
 
 
 Output
@@ -73,6 +73,7 @@ Output
 `lambda_final.out`: the lambda value and pvalue of the Poisson distribution for each read
 
 `error_matrix_final.out`: the error matrix in the final iteration
+
 
 
 
