@@ -153,7 +153,7 @@ or use `Seqkit`
 seqkit seq -w 0 -o testdata/reference_V5V7_nonwrapped.fasta testdata/reference_V5V7.fasta
 ```
 
-### Preprocess the rawdata
+### Preprocess of the rawdata
 
 Firstly, pair-end raw reads should be merged by using any reads merging tools:
 ```
