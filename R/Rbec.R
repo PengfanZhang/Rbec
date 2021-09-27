@@ -91,7 +91,7 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
     straintab[, 1] <- ref_name$name[match(straintab[, 1], ref_name[, 2])]
     # normalize the abundance if copy number is available
     if (!is.null(cn)){
-      cp_n <- as.data.frame(read_delim(cn, delim="\t"), stringsAsFactors = FALSE)
+      cp_n <- as.data.frame(read_delim(cn, delim="\t", col_names=FALSE), stringsAsFactors = FALSE)
       straintab_norm <- straintab
       straintab_norm$Corrected_Abundance <- round(straintab_norm$Corrected_Abundance/cp_n[match(straintab_norm$Ref_seq, cp_n[, 1]), 2])
     }
