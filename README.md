@@ -71,10 +71,14 @@ To calculate the probability that an unique tag is produced by a given error-gen
 ### Calculation of error-generation probabilities
 
 We assume that the mismatches between query and reference are generated independently, so the rate at which a unique tag i is produced from the error-generating reference j, designated λ, is calculated by the product over the error probabilities at each position of the alignment l:
+
 <img src="https://latex.codecogs.com/svg.image?\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" title="\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" />
+
 Where L is the total length of the alignment. 
 Similar to the error-aware model implemented in DADA2 [1], the abundance probability of each unique tag is calculated using the Poisson distribution:
 
+<img src="https://latex.codecogs.com/svg.image?E=a_{j}^{'}\lambda_{ij}" title="E=a_{j}^{'}\lambda_{ij}" />
+<img src="https://latex.codecogs.com/svg.image?Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E,&space;a)" title="Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E, a)" />
  
 Where E is the expectation of the Poisson distribution, ai is the abundance of a unique tag i, and aj' is the aggregated abundances of all unique tags assigned to a reference sequence j.
 Unique tags with a P-value lower than 10-40, and an expectation lower than 0.05 are discarded. This expectation cut-off is intended to retain tags that could be produced at least once by the reference with the probability above 5%. The aim of this step is to retain tags that are generated from intra-strain amplicon sequence variants, which show high abundance relative to the reference sequence but do not exceed the P-value cut-off. It is possible that, for certain experiments, modifying these parameters could be useful. For instance, in a community containing very low abundance strains, lowering the minimum expectation threshold might increase the sensitivity of the algorithm. Similarly, if the presence of low-abundance contaminants closely related to a reference strain is of particular concern, increasing the minimum P-value threshold will help identify potential contaminants, at the risk of generating a larger number of false positives.
