@@ -71,7 +71,7 @@ To calculate the probability that an unique tag is produced by a given error-gen
 ### Calculation of error-generation probabilities
 
 We assume that the mismatches between query and reference are generated independently, so the rate at which a unique tag i is produced from the error-generating reference j, designated λ, is calculated by the product over the error probabilities at each position of the alignment l:
-\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))
+<img src="https://latex.codecogs.com/svg.image?\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" title="\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" />
 Where L is the total length of the alignment. 
 Similar to the error-aware model implemented in DADA2 [1], the abundance probability of each unique tag is calculated using the Poisson distribution:
 
