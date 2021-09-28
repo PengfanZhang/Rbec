@@ -72,13 +72,13 @@ To calculate the probability that an unique tag is produced by a given error-gen
 
 We assume that the mismatches between query and reference are generated independently, so the rate at which a unique tag i is produced from the error-generating reference j, designated λ, is calculated by the product over the error probabilities at each position of the alignment l:
 
-<img src="https://latex.codecogs.com/svg.image?\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" title="\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" />
+<p align="center"><img src="https://latex.codecogs.com/svg.image?\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" title="\lambda_{ij}=\prod_{l=1}^{L}Err(j(l)->i(l)|qual(l))" /></p>
 
 Where L is the total length of the alignment. 
 Similar to the error-aware model implemented in DADA2 [1], the abundance probability of each unique tag is calculated using the Poisson distribution:
 
-<img src="https://latex.codecogs.com/svg.image?E=a_{j}^{'}\lambda_{ij}" title="E=a_{j}^{'}\lambda_{ij}" />
-<img src="https://latex.codecogs.com/svg.image?Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E,&space;a)" title="Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E, a)" />
+<p align="center"><img src="https://latex.codecogs.com/svg.image?E=a_{j}^{'}\lambda_{ij}" title="E=a_{j}^{'}\lambda_{ij}" /></p>
+<p align="center"><img src="https://latex.codecogs.com/svg.image?Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E,&space;a)" title="Pvalue=\sum_{a=a_{i}}^{\infty}Pois(E, a)" /></p>
  
 Where E is the expectation of the Poisson distribution, ai is the abundance of a unique tag i, and aj' is the aggregated abundances of all unique tags assigned to a reference sequence j.
 Unique tags with a P-value lower than 10-40, and an expectation lower than 0.05 are discarded. This expectation cut-off is intended to retain tags that could be produced at least once by the reference with the probability above 5%. The aim of this step is to retain tags that are generated from intra-strain amplicon sequence variants, which show high abundance relative to the reference sequence but do not exceed the P-value cut-off. It is possible that, for certain experiments, modifying these parameters could be useful. For instance, in a community containing very low abundance strains, lowering the minimum expectation threshold might increase the sensitivity of the algorithm. Similarly, if the presence of low-abundance contaminants closely related to a reference strain is of particular concern, increasing the minimum P-value threshold will help identify potential contaminants, at the risk of generating a larger number of false positives.
@@ -87,8 +87,9 @@ As discussed above, Rbec is able to identify polymorphic paralogues of the marke
 ### Iterative correction of unique tags
 
 Tags above the P-value or E threshold are then randomly subsampled (5 000 reads by default) and aligned to the reference sequences in an iterative process. In each iteration, the error matrix is updated with tags corrected during the last iteration. The iterations continue until the number of corrected reads falls below two fixed thresholds, which we set to determine whether the iteration should stop or not. These two thresholds correspond to the absolute and relative differences in the number of corrected reads between the present and previous iterations, and are calculated as follows:
- 
- 
+
+<p align="center"><img src="https://latex.codecogs.com/svg.image?N_{k}-N_{k-1}\leqslant&space;100" title="N_{k}-N_{k-1}\leqslant 100" /></p>
+<p align="center"><img src="https://latex.codecogs.com/svg.image?abs((N_{k}-N_{k-1})/N_{k-1})\leqslant&space;1%" title="abs((N_{k}-N_{k-1})/N_{k-1})\leqslant 1%" /></p>
 Nk and Nk-1 denote the number of corrected reads in the kth and k-1th iteration respectively. The threshold based on relative differences is used to appropriately stop the iterative process for samples with low sequencing depths, since they can easily satisfy the cut-off based on absolute differences. Once both of these two conditions are met, iterations stop and each reference sequence is assigned an abundance equal to the aggregated abundance of all its assigned unique tags.
 
 
