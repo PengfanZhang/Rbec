@@ -10,11 +10,11 @@ Rbec is a tool for analysing amplicon sequencing data from synthetic communities
 Content
 ---
 
-[1. Installation](#Installation)
+[1. Algorithm description](#Algorithm-description)
 
-[2. Algorithm description](#Algorithm-description)
+[2. Installation](#Installation)
 
-[3. Usages](#Usages)
+[3. Usage](#Usage)
 
    [&nbsp; &nbsp; --Parameters](#Parameters)
     
@@ -26,31 +26,10 @@ Content
     
    [&nbsp; &nbsp; --Dependence on accurate reference sequences](#Dependence-on-accurate-reference-sequences)
 
-[4. Demo starting from raw data](#Demo-starting-from-raw-data)
+[4. Example starting from raw data](#Demo-starting-from-raw-data)
 
 [5. Credits](#Credits)
 
-
-## Installation
-
-Rbec is a free R package. To install Rbec, one needs to have the 'dada2' package (https://benjjneb.github.io/dada2/dada-installation.html) installed beforehand manually with the following command:
-```
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("dada2")
-```
-
-Then you can directly download the newest version with devtools:
-```
-devtools::install_github("PengfanZhang/Rbec", dependencies = TRUE)
-```
-
-Alternatively, you can download from Bioconductor:
-```
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("Rbec")
-```
 
 ## Algorithm description
 
@@ -93,7 +72,28 @@ Tags above the P-value or E threshold are then randomly subsampled (5 000 reads 
 Nk and Nk-1 denote the number of corrected reads in the kth and k-1th iteration respectively. The threshold based on relative differences is used to appropriately stop the iterative process for samples with low sequencing depths, since they can easily satisfy the cut-off based on absolute differences. Once both of these two conditions are met, iterations stop and each reference sequence is assigned an abundance equal to the aggregated abundance of all its assigned unique tags.
 
 
-## Usages
+## Installation
+
+Rbec is a free R package. Installation of Rbec requires the 'dada2' package (https://benjjneb.github.io/dada2/dada-installation.html) to installed beforehand manually with the following command:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("dada2")
+```
+
+The latest version of Rbec can be installed with devtools:
+```
+devtools::install_github("PengfanZhang/Rbec", dependencies = TRUE)
+```
+
+Alternatively, you can download from Bioconductor:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("Rbec")
+```
+
+## Usage
 
 
 ### Parameters
@@ -143,7 +143,7 @@ Nk and Nk-1 denote the number of corrected reads in the kth and k-1th iteration 
 
 ### Characterizing microbial communities in SynComs
 
-You can use the following commands to profile the microbial composition and the test data is a subset of amplicon sequencing data from individual strain:
+To generate microbial community compsition profiles, the Rbec function can be used. Below there is an example using a small test amplicon mock community data.
 
 ```
 fq <- system.file("extdata", "test_raw_merged_reads.fastq.gz", package="Rbec")
@@ -173,17 +173,17 @@ This command will generate a plot showing the distribution of percentages of cor
 
 ### Dependence on accurate reference sequences
 
-
 Since Rbec is a reference-based method for error correction in sequencing reads, the accuracy of the reference sequence would critically influence the result. Inference of marker gene sequences from draft genome assemblies or via Sanger sequencing might lead to errors that may negatively impact the accuracy of the results. If errors are present in the reference sequence of a certain strain and no reads can be perfectly aligned to that reference (with an initial abundance of 0 for that reference), Rbec flags this strain as absent with an abundance of 0. One tricky way to overcome this issue in which references are not 100% accurate is that you can look up the contamination sequences outputted by the Rbec function at the first round and align the contamination sequences to the references of strains that are missing in the community. When this occurs, the correct sequence will be flagged by Rbec as a putative contaminant. The user can use this information to replace the erroneous entry in the reference database and re-run Rbec. This should be done with care to avoid true contaminants to be mistaken by members of the original input SynCom when their phylogenetic distance is low.
 
-## Demo starting from raw data
+## Example starting from raw data
 
-In the `testdata` folder, you can find the rawdata and the corresponding reference file from a real synthetic community. In this section, we'll guide you through the preprocess of the rawdata and the reference sequences.
+In the `testdata` folder, you can find the rawdata and the corresponding reference file from a real synthetic community. In this section, we show a walkthrough example of how to pre-process the raw data to be analyzed with Rbec.
 
-Rbec can use as an input FASTQ files from either single- or pair-end sequencing data. In addition, a database of reference sequences in FASTA format needs to be provided.
+Rbec can use as an input FASTQ files from either single- or pair-end sequencing data. In addition, it requires a database of reference sequences in FASTA format.
 
 ### Preparation of reference sequences
-Sequences in the reference database should be already truncated to the region exactly matching the amplicon reads. For example, If we sequence the V5-V7 region of the synthetic bacterial community, the reference sequence of each strain in the reference database should also be truncated to retain the V5-V7 region only rather than the full-length of *16S* rRNA sequences. To truncate the reference sequences into a specific region, a tool such as cutadapt can be used:
+
+Sequences in the reference database should be truncated to the region exactly matching the amplicon reads. For example, If we sequence the V5-V7 region of the synthetic bacterial community, the reference sequence of each strain in the reference database should also be truncated to retain the V5-V7 region only rather than the full-length of *16S* rRNA sequences. To truncate the reference sequences into a specific region, a tool such as cutadapt can be used:
 
 ```
 cutadapt -g AACMGGATTAGATACCC -a GGAAGGTGGGGATGACGT -n 2 -o testdata/reference_V5V7.fasta testdata/reference_full.fasta
@@ -199,24 +199,22 @@ or use `Seqkit`
 seqkit seq -w 0 -o testdata/reference_V5V7_nonwrapped.fasta testdata/reference_V5V7.fasta
 ```
 
-### Preprocess of the rawdata
+### Preprocess of the raw data
 
 Firstly, pair-end raw reads should be merged by using any reads merging tools:
 ```
 flash2 testdata/test_R1.fastq.gz testdata/test_R2.fastq.gz -M 250 -o test -x 0.25 -d testdata
 ```
-usearch -fastq_filter test.extendedFrags.fastq -fastqout test.extendedFrags.filtered.fastq -fastq_maxns 0 -fastq_minlen 200
 
+Amplicon reads should be manually filtered by excluding short reads or reads with ambiguous bases using USEARCH or a similar software before running Rbec. Below  is an example using USEARCH:
 
-
-Amplicon reads should be manually filtered by excluding reads with ambiguous reads with USEARCH or a similar software before running Rbec and short reads are removed to avoid dimers. Following is an example of removing reads with ambiguous reads with USEARCH:
 ```
 usearch -fastq_filter testdata/test.extendedFrags.fastq -fastqout testdata/test.extendedFrags.filtered.fastq -fastq_maxns 0 -fastq_minlen 200
 ```
 
 ### Start with Rbec
 
-Now, with the two files in hands, you can invoke Rbec in your R environment to explore your samples:
+With the filtered, merged raw reads FASTQ file and the reference database FASTA, you can invoke Rbec in your R environment to explore your samples:
 ```
 Rbec("testdata/test.extendedFrags.filtered.fastq", "testdata/reference_V5V7_nonwrapped.fasta", 1, 2000)
 ```
