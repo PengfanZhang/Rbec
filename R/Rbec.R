@@ -138,6 +138,8 @@ Rbec <- function(fastq, reference, outdir, threads=1, sampling_size=5000, ascii=
       cp_n <- as.data.frame(table(cn_internal_inference))
       cp_n$Freq <- cp_n$Freq + 1
       straintab_norm <- straintab
+      names(cp_n) <- c("Var1", "Freq")
+      cp_n <- rbind(as.data.frame(table(straintab_norm$Ref_seq[!straintab_norm$Ref_seq %in% cp_n[,1]])), cp_n)
       straintab_norm$Corrected_Abundance <- round(straintab_norm$Corrected_Abundance/cp_n[match(straintab_norm$Ref_seq, cp_n[, 1]), 2])
 	}
 
