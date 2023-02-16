@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include "dada.h"
+#if defined(__x86_64__) || defined(__i386__)
 #include "emmintrin.h"
+#elif defined(__arm__)
+#include "sse2neon.h"
+#endif
 using namespace std;
 // [[Rcpp::interfaces(cpp)]]
 
