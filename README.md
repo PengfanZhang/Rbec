@@ -1,6 +1,6 @@
 # Rbec: a tool for analysis of amplicon sequencing data from synthetic microbial communities
 
-Our manuscript is currently available as a preprint in [*bioRxiv*](https://doi.org/10.1101/2021.01.15.426834).
+Our manuscript is currently available in *ISME Communications*.
 
 Rbec is a tool for analysing amplicon sequencing data from synthetic communities (SynComs), where the reference sequences for each strain are already available. Rbec can accurately correct PCR and sequencing errors, identify intra-species polymorphic variation, and detect contaminations in SynCom amplicon data.
 
